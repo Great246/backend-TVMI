@@ -24,12 +24,13 @@ export function createRefreshToken(user) {
 }
 
 export const register = async (req, res) => {
-  const { fullname, Username, Email, password, phonenumber, confirmPassword } = req.body
+   try {
+     const { fullname, Username, Email, password, phonenumber, confirmPassword } = req.body
 
   if (!fullname || !Username || !Email || !phonenumber || !password || !confirmPassword) {
     return res.json({success: false, message: "All fields are required"})
 }
-   try {
+
     const user = await User.findOne({Email})
 
     if (user) {
@@ -152,7 +153,8 @@ export const logout = (req, res) => {
 }
 
 export const forgotPassword = async (req, res) => {
-    const { Email } = req.body
+    try {
+      const { Email } = req.body
     if (!Email) {
         res.status(400).json({success: false, message: "Email is required"})
     }
@@ -192,7 +194,11 @@ export const forgotPassword = async (req, res) => {
         </div>
         `
     })
-    return res.status(200).json({success: true, message: "Reset password link sent to your email"})
+    return res.status(200).json({success: true, message: "Reset password link sent to your email"})  
+    } catch (error) {
+        console.log(error)
+    }
+    
 }
 
 export const resetPassword = async (req, res) => {
