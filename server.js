@@ -28,7 +28,7 @@ app.use(express.json());
 // app.use(helmet()) 
 
 app.use(cookieParser());
-app.set('trust proxy', 1)
+
 
 
 app.use("/api/auth", authRouter);
@@ -39,6 +39,7 @@ app.use("/api/gallery", galleryRouter)
 app.use("/api/contact", contactRouter)
 app.use("/api/visit", visitorrouter)
 
+app.set('trust proxy', 1)
 const PORT = process.env.PORT || 5000;
 
 app.get("/", (req, res) => {
