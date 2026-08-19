@@ -19,7 +19,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "https://frontend-tvmi-u0j0hvo3f-great-s-projects2.vercel.app",
+    origin: process.env.FRONTEND_URL,
     credentials: true,
   }),
 );
