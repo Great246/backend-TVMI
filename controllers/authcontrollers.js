@@ -34,11 +34,11 @@ export const register = async (req, res) => {
     const user = await User.findOne({Email})
 
     if (user) {
-        return res.json({success: false, message: "User already exists"})
+        return res.status(404).json({success: false, message: "User already exists"})
     }
     const vaildemail = validator.isEmail(Email)
     if (!vaildemail) {
-        res.json({success: false, message: "Please input a valid email"})
+       return res.json({success: false, message: "Please input a valid email"})
     }
     if (password !== confirmPassword) {
         return res.json({success: false, message: "Password doesn't match"})
@@ -50,8 +50,8 @@ export const register = async (req, res) => {
     const newUser = await User.create({
       fullname, Username, Email, phonenumber, password: hashedPassword
     })
-    await newUser.save()
-    return res.status(201).json({success: true, message: "User registered successfully"})
+
+    return res.status(200).json({success: true, message: "User registered successfully"})
 
    } catch (error) {
      return res.status(500).json({success: false, message: "Internal server error"})
@@ -132,7 +132,7 @@ export const getUser = async (req, res) => {
     if (!user) {
         return res.status(404).json({success: false, message: "User not logged in"})
     }
-    return res.json({success: true, user})
+    return res.status(200).json({success: true, user})
     } catch (error) {
         return res.json({success: false, message: error.message})
     }}
